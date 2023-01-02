@@ -1,1 +1,42 @@
+<div class="container d-flex">
+  <div class="p-3"><b>System Status:</b> {{ systemHealth }}</div>
+  <div class="p-3">
+    <b>System Uptime:</b> {{ systemUptime * 1000 | date : "mm:ss" }} m:s
+  </div>
+  <div class="p-3">
+    <b>System Space:</b> {{ systemSpace / 1000000000 | number : "1.2-2" }} GB
+  </div>
+  <div class="p-3"><b>System Cpu:</b> {{ systemCpu }}</div>
+  <div class="p-3">
+    <button class="btn btn-primary" (click)="refreshPage()">Refresh</button>
+  </div>
+</div>
+
+<div class="container">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Timestamp</th>
+        <th scope="col">Method</th>
+        <th scope="col">Uniform Resource Identifier</th>
+        <th scope="col">Status</th>
+        <th scope="col">Time taken</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let trace of traces">
+        <td>{{ trace.timestamp | date : "medium" }}</td>
+        <td>{{ trace.method }}</td>
+        <td>{{ trace.uri }}</td>
+        <td *ngIf="trace.status == '200'">
+          <span class="btn btn-success btn-sm">{{ trace.status }}</span>
+        </td>
+        <td *ngIf="trace.status != '200'">
+          <span class="btn btn-danger btn-sm">{{ trace.status }}</span>
+        </td>
+        <td>{{ trace.timeTaken }}ms</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 <router-outlet></router-outlet>
