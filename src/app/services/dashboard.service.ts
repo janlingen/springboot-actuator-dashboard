@@ -17,9 +17,23 @@ export class DashboardService {
     this.httpClient
       .get(`${this.SERVER_URL}/httptrace`)
       .subscribe((data: any) => {
-        console.log(data);
+        if (data != null) {
+          this.createAllTraces(data.traces);
+        }
       });
   }
 
-  createAllTraces(data: any) {}
+  private createAllTraces(data: any) {
+    for (var trace of data) {
+      this.traces.push(
+        new Trace(
+          trace.timestamp,
+          trace.request.method,
+          trace.request.uri,
+          trace.response.status,
+          trace.timeTaken
+        )
+      );
+    }
+  }
 }
