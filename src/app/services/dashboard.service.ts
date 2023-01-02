@@ -61,12 +61,14 @@ export class DashboardService {
   }
 
   private fetchSystemSpace() {
-    this.httpClient.get(`${this.SERVER_URL}/metrics/disk.total`).subscribe((data: any) => {
-      if (data != null) {
-        this.systemSpace = data.measurements[0].value;
-        this.systemSpaceChanged.next(this.systemSpace);
-      }
-    });
+    this.httpClient
+      .get(`${this.SERVER_URL}/metrics/disk.total`)
+      .subscribe((data: any) => {
+        if (data != null) {
+          this.systemSpace = data.measurements[0].value;
+          this.systemSpaceChanged.next(this.systemSpace);
+        }
+      });
   }
 
   private fetchSystemCpu() {
@@ -82,7 +84,7 @@ export class DashboardService {
 
   private createAllTraces(data: any) {
     for (var trace of data) {
-      if (trace.request.uri != 'http://localhost:8080/actuator/httptrace') {
+      if (!trace.request.uri.includes('http://localhost:8080/actuator/')) {
         this.traces.push(
           new Trace(
             trace.timestamp,
