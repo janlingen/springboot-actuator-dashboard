@@ -18,6 +18,8 @@ export class DashboardService {
   systemSpaceChanged: Subject<number> = new Subject();
   systemCpu: number = 0;
   systemCpuChanged: Subject<number> = new Subject();
+  errorOccured: number[] = [0, 0, 0, 0];
+  errorOccuredChanged: Subject<number[]> = new Subject();
 
   private SERVER_URL = environment.serverUrl;
 
@@ -84,7 +86,9 @@ export class DashboardService {
 
   private createAllTraces(data: any) {
     for (var trace of data) {
-      if (!trace.request.uri.includes('http://localhost:8080/actuator/')) {
+      if (
+        !trace.request.uri.includes('http://localhost:8080/actuator/')
+      ) {
         this.traces.push(
           new Trace(
             trace.timestamp,
@@ -94,7 +98,17 @@ export class DashboardService {
             trace.timeTaken
           )
         );
+        if (trace.response.status == '200') {
+          this.errorOccured[0] += 1;
+        } else if (trace.response.status == '400') {
+          this.errorOccured[1] += 1;
+        } else if (trace.response.status == '404') {
+          this.errorOccured[2] += 1;
+        } else if (trace.response.status == '500') {
+          this.errorOccured[3] += 1;
+        }
       }
     }
+    this.errorOccuredChanged.next(this.errorOccured);
   }
 }
