@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { DashboardService } from './services/dashboard.service';
 import { Trace } from './services/trace.model';
@@ -10,7 +10,7 @@ import { R3TargetBinder } from '@angular/compiler';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   traces: Trace[] = [];
   private tracesChanged: Subscription;
   systemHealth: String = 'DOWN';
@@ -47,15 +47,24 @@ export class AppComponent implements OnInit {
       this.dashboardService.errorOccuredChanged.subscribe(
         (errorOccured: number[]) => {
           this.errorOccured = errorOccured;
-          this.createChart();
+          this.createBarChart();
         }
       );
   }
 
   ngOnInit(): void {}
 
-  public createChart() {
-    new Chart('myChart', {
+  ngOnDestroy(): void {
+    this.tracesChanged.unsubscribe();
+    this.systemHeatlhChanged.unsubscribe();
+    this.systemUptimeChanged.unsubscribe();
+    this.systemSpaceChanged.unsubscribe();
+    this.systemCpuChanged.unsubscribe();
+    this.errorOccuredChanged.unsubscribe()
+  }
+
+  public createBarChart() {
+    new Chart('myBarChart', {
       type: 'bar',
       data: {
         labels: ['200', '400', '404', '500'],
