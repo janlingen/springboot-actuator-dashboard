@@ -1,27 +1,9 @@
 # SpringbootActuatorDashboard
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.4.
+This tool is designed to help developers and administrators monitor the performance and health of their application. It tracks various metrics related to requests made to the application, including the request method and URI, the response status, and the time taken to process each request. In addition to displaying this information in a simple, easy-to-read format, the tool also includes a graph that visualizes these metrics over time, allowing users to easily spot trends and identify any potential issues. Additionally, the tool provides various other health status indicators for the application, such as its current resource usage and any errors or issues that have been detected. This information can be valuable for identifying and addressing performance bottlenecks, optimizing resource utilization, and ensuring the overall stability and reliability of the application.
 
-## Development server
+![Screenshot](misc/example1)
+
+## Installation and configuration
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
